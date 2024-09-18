@@ -1,0 +1,111 @@
+2024-09-18T04:44:35.3778779Z TRACE:: Engine.Main(): LEAN ALGORITHMIC TRADING ENGINE v2.5.0.0 Mode: DEBUG (64bit) Host: DESKTOP-CKADOQQ
+2024-09-18T04:44:35.4052071Z TRACE:: Engine.Main(): Started 4:44 AM
+2024-09-18T04:44:35.4135452Z TRACE:: Config.Get(): Configuration key not found. Key: lean-manager-type - Using default value: LocalLeanManager
+2024-09-18T04:44:35.4338687Z TRACE:: JobQueue.NextJob(): Selected /LeanCLI/main.py
+2024-09-18T04:44:35.4991184Z TRACE:: Config.GetValue(): scheduled-event-leaky-bucket-capacity - Using default value: 120
+2024-09-18T04:44:35.4994610Z TRACE:: Config.GetValue(): scheduled-event-leaky-bucket-time-interval-minutes - Using default value: 1440
+2024-09-18T04:44:35.5003332Z TRACE:: Config.GetValue(): scheduled-event-leaky-bucket-refill-amount - Using default value: 18
+2024-09-18T04:44:35.5018695Z TRACE:: Config.GetValue(): storage-limit - Using default value: 10737418240
+2024-09-18T04:44:35.5022245Z TRACE:: Config.GetValue(): storage-permissions - Using default value: 3
+2024-09-18T04:44:35.5025434Z TRACE:: Config.Get(): Configuration key not found. Key: optimization-id - Using default value: 
+2024-09-18T04:44:35.5029283Z TRACE:: Config.Get(): Configuration key not found. Key: backtest-name - Using default value: local
+2024-09-18T04:44:35.5099680Z TRACE:: Config.Get(): Configuration key not found. Key: data-channel - Using default value: 
+2024-09-18T04:44:35.5102945Z TRACE:: Config.Get(): Configuration key not found. Key: python-venv - Using default value: 
+2024-09-18T04:44:35.5105103Z TRACE:: Config.Get(): Configuration key not found. Key: out-of-sample-max-end-date - Using default value: 
+2024-09-18T04:44:35.5107733Z TRACE:: Config.GetValue(): out-of-sample-days - Using default value: 0
+2024-09-18T04:44:35.5124597Z TRACE:: Config.Get(): Configuration key not found. Key: data-permission-manager - Using default value: DataPermissionManager
+2024-09-18T04:44:35.5449411Z TRACE:: Config.GetValue(): zip-data-cache-provider - Using default value: 10
+2024-09-18T04:44:35.5481201Z TRACE:: Config.Get(): Configuration key not found. Key: fundamental-data-provider - Using default value: CoarseFundamentalDataProvider
+2024-09-18T04:44:35.5559325Z TRACE:: AlgorithmManager.CreateTokenBucket(): Initializing LeakyBucket: Capacity: 120 RefillAmount: 18 TimeInterval: 1440
+2024-09-18T04:44:35.5569006Z TRACE:: Config.GetValue(): algorithm-manager-time-loop-maximum - Using default value: 20
+2024-09-18T04:44:35.5804056Z TRACE:: Engine.Run(): Resource limits '0' CPUs. 2147483647 MB RAM.
+2024-09-18T04:44:35.5813670Z TRACE:: TextSubscriptionDataSourceReader.SetCacheSize(): Setting cache size to 71582788 items
+2024-09-18T04:44:35.6501807Z TRACE:: Config.GetValue(): downloader-data-update-period - Using default value: 7
+2024-09-18T04:44:36.1577436Z TRACE:: Config.GetValue(): algorithm-creation-timeout - Using default value: 90
+2024-09-18T04:44:36.1633995Z TRACE:: PythonInitializer.Initialize(): start...
+2024-09-18T04:44:37.4137475Z TRACE:: PythonInitializer.Initialize(): ended
+2024-09-18T04:44:37.4163823Z TRACE:: AlgorithmPythonWrapper(): Python version 3.11.7 (main, Dec 15 2023, 18:24:52) [GCC 11.2.0]: Importing python module main
+2024-09-18T04:44:38.0466813Z TRACE:: AlgorithmPythonWrapper(): main successfully imported.
+2024-09-18T04:44:38.0494194Z TRACE:: AlgorithmPythonWrapper(): Creating IAlgorithm instance.
+2024-09-18T04:44:38.0726440Z TRACE:: Config.Get(): Configuration key not found. Key: databases-refresh-period - Using default value: 1.00:00:00
+2024-09-18T04:44:38.2784380Z TRACE:: Config.GetValue(): mute-python-library-logging - Using default value: True
+2024-09-18T04:44:38.2816464Z TRACE:: LocalObjectStore.Initialize(): Storage Root: /Storage. StorageFileCount 9999999. StorageLimit 10240MB
+2024-09-18T04:44:38.2921811Z TRACE:: Config.GetValue(): zip-data-cache-provider - Using default value: 10
+2024-09-18T04:44:38.3028740Z TRACE:: HistoryProviderManager.Initialize(): history providers [SubscriptionDataReaderHistoryProvider]
+2024-09-18T04:44:38.3059279Z TRACE:: BacktestingSetupHandler.Setup(): Setting up job: UID: 310940, PID: 0, Version: 2.5.0.0, Source: WebIDE
+2024-09-18T04:44:38.3142367Z TRACE:: Config.Get(): Configuration key not found. Key: security-data-feeds - Using default value: 
+2024-09-18T04:44:38.8647568Z TRACE:: Event Name "EveryDay: Every 5 min", scheduled to run.
+2024-09-18T04:44:38.8693955Z ERROR:: IndicatorBase.Update(): This is a forward only indicator: EMA(5,FPT_min) Input: 2024-09-18 11:26:03Z Previous: 2024-09-18 11:29:41Z. It will not be updated with this input.
+2024-09-18T04:44:38.9589396Z TRACE:: BaseSetupHandler.SetupCurrencyConversions():
+Account Type: Margin
+
+Symbol      Quantity    Conversion = Value in USD
+USD: $      100000.00 @       1.00 = $100000
+-------------------------------------------------
+CashBook Total Value:                $100000
+
+2024-09-18T04:44:38.9626361Z TRACE:: Total margin information: TotalMarginUsed: 0.00, MarginRemaining: 100000.00
+2024-09-18T04:44:38.9633450Z TRACE:: SetUp Backtesting: User: 310940 ProjectId: 0 AlgoId: 1235881528
+2024-09-18T04:44:38.9646115Z TRACE:: Dates: Start: 07/20/2024 End: 09/17/2024 Cash: ¤100,000.00 MaximumRuntime: 100.00:00:00 MaxOrders: 2147483647
+2024-09-18T04:44:38.9681248Z TRACE:: BacktestingResultHandler(): Sample Period Set: 21.60
+2024-09-18T04:44:38.9696409Z TRACE:: Config.GetValue(): forward-console-messages - Using default value: True
+2024-09-18T04:44:38.9711039Z TRACE:: JOB HANDLERS:
+         DataFeed:             QuantConnect.Lean.Engine.DataFeeds.FileSystemDataFeed
+         Setup:                QuantConnect.Lean.Engine.Setup.BacktestingSetupHandler
+         RealTime:             QuantConnect.Lean.Engine.RealTime.BacktestingRealTimeHandler
+         Results:              QuantConnect.Lean.Engine.Results.BacktestingResultHandler
+         Transactions:         QuantConnect.Lean.Engine.TransactionHandlers.BacktestingTransactionHandler
+         Object Store:         QuantConnect.Lean.Engine.Storage.LocalObjectStore
+         History Provider:     QuantConnect.Lean.Engine.HistoricalData.HistoryProviderManager
+         Brokerage:            QuantConnect.Brokerages.Backtesting.BacktestingBrokerage
+         Data Provider:        QuantConnect.Lean.Engine.DataFeeds.DefaultDataProvider
+
+2024-09-18T04:44:39.0214123Z TRACE:: Event Name "Daily Sampling", scheduled to run.
+2024-09-18T04:44:39.0233806Z TRACE:: AlgorithmManager.Run(): Begin DataStream - Start: 7/20/2024 12:00:00 AM Stop: 9/17/2024 11:59:59 PM Time: 7/19/2024 12:00:00 AM Warmup: True
+2024-09-18T04:44:39.0405753Z TRACE:: Debug: Launching analysis for 1235881528 with LEAN Engine v2.5.0.0
+2024-09-18T04:44:39.0797701Z TRACE:: Config.GetValue(): data-feed-workers-count - Using default value: 8
+2024-09-18T04:44:39.0836098Z TRACE:: Config.GetValue(): data-feed-max-work-weight - Using default value: 400
+2024-09-18T04:44:39.0839525Z TRACE:: WeightedWorkScheduler(): will use 8 workers and MaxWorkWeight is 400
+2024-09-18T04:44:39.1838362Z TRACE:: UniverseSelection.AddPendingInternalDataFeeds(): Adding internal benchmark data feed FPT,#0,FPT,Hour,TradeBar,Trade,Adjusted,OpenInterest,Internal
+2024-09-18T04:44:39.3069335Z TRACE:: Synchronizer.GetEnumerator(): Exited thread.
+2024-09-18T04:44:39.3074733Z TRACE:: AlgorithmManager.Run(): Firing On End Of Algorithm...
+2024-09-18T04:44:39.3089312Z TRACE:: Engine.Run(): Exiting Algorithm Manager
+2024-09-18T04:44:39.3128452Z TRACE:: StopSafely(): Waiting for 'Isolator Thread' thread to stop...
+2024-09-18T04:44:39.3135535Z TRACE:: FileSystemDataFeed.Exit(): Start. Setting cancellation token...
+2024-09-18T04:44:39.3150783Z TRACE:: FileSystemDataFeed.Exit(): Exit Finished.
+2024-09-18T04:44:39.3156167Z TRACE:: BacktestingResultHandler.Exit(): starting...
+2024-09-18T04:44:39.3160239Z TRACE:: BacktestingResultHandler.Exit(): Saving logs...
+2024-09-18T04:44:39.3226424Z TRACE:: Debug: url: https://apipubaws.tcbs.com.vn/stock-insight/v1/intraday/FPT/his/paging?ticker=FPT&resolution=1&from=1721433600&to=1726617600
+2024-09-18T04:44:39.3227273Z TRACE:: StopSafely(): Waiting for 'Result Thread' thread to stop...
+2024-09-18T04:44:39.3234061Z TRACE:: Debug: Historical data {'page': 0, 'size': 50, 'headIndex': 4724, 'numberOfItems': 50, 'total': 4725, 'ticker': 'FPT', 'data': [{'p': 134800.0, 'v': 300, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2672300.0, 'sa': 1042100.0, 'hl': False, 'pcp': 100.0, 't': '11:29:41'}, {'p': 134700.0, 'v': 800, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2672000.0, 'sa': 1042100.0, 'hl': False, 'pcp': 0.0, 't': '11:29:39'}, {'p': 134700.0, 'v': 1200, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2672000.0, 'sa': 1041300.0, 'hl': False, 'pcp': -100.0, 't': '11:29:39'}, {'p': 134800.0, 'v': 500, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2672000.0, 'sa': 1040100.0, 'hl': False, 'pcp': 100.0, 't': '11:29:36'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2671500.0, 'sa': 1040100.0, 'hl': False, 'pcp': -100.0, 't': '11:29:33'}, {'p': 134800.0, 'v': 100, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2671500.0, 'sa': 1040000.0, 'hl': False, 'pcp': 0.0, 't': '11:28:46'}, {'p': 134800.0, 'v': 300, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2671400.0, 'sa': 1040000.0, 'hl': False, 'pcp': 0.0, 't': '11:28:44'}, {'p': 134800.0, 'v': 1900, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2671100.0, 'sa': 1040000.0, 'hl': True, 'pcp': 0.0, 't': '11:28:43'}, {'p': 134800.0, 'v': 700, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2669200.0, 'sa': 1040000.0, 'hl': False, 'pcp': 0.0, 't': '11:28:35'}, {'p': 134800.0, 'v': 100, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2668500.0, 'sa': 1040000.0, 'hl': False, 'pcp': 0.0, 't': '11:28:17'}, {'p': 134800.0, 'v': 800, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2668400.0, 'sa': 1040000.0, 'hl': False, 'pcp': 0.0, 't': '11:28:05'}, {'p': 134800.0, 'v': 400, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2667600.0, 'sa': 1040000.0, 'hl': False, 'pcp': 100.0, 't': '11:27:46'}, {'p': 134700.0, 'v': 3800, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2667200.0, 'sa': 1040000.0, 'hl': True, 'pcp': 0.0, 't': '11:27:45'}, {'p': 134700.0, 'v': 4600, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2667200.0, 'sa': 1036200.0, 'hl': True, 'pcp': 0.0, 't': '11:27:45'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2667200.0, 'sa': 1031600.0, 'hl': False, 'pcp': 0.0, 't': '11:27:45'}, {'p': 134700.0, 'v': 800, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2667200.0, 'sa': 1031500.0, 'hl': False, 'pcp': 0.0, 't': '11:27:45'}, {'p': 134700.0, 'v': 500, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2667200.0, 'sa': 1030700.0, 'hl': False, 'pcp': 0.0, 't': '11:27:45'}, {'p': 134700.0, 'v': 200, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2667200.0, 'sa': 1030200.0, 'hl': False, 'pcp': -100.0, 't': '11:27:45'}, {'p': 134800.0, 'v': 800, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2667200.0, 'sa': 1030000.0, 'hl': False, 'pcp': 0.0, 't': '11:27:33'}, {'p': 134800.0, 'v': 300, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2666400.0, 'sa': 1030000.0, 'hl': False, 'pcp': 0.0, 't': '11:27:27'}, {'p': 134800.0, 'v': 100, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2666100.0, 'sa': 1030000.0, 'hl': False, 'pcp': 100.0, 't': '11:27:22'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2666000.0, 'sa': 1030000.0, 'hl': False, 'pcp': 0.0, 't': '11:27:20'}, {'p': 134700.0, 'v': 200, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2666000.0, 'sa': 1029900.0, 'hl': False, 'pcp': 0.0, 't': '11:27:14'}, {'p': 134700.0, 'v': 200, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2666000.0, 'sa': 1029700.0, 'hl': False, 'pcp': 0.0, 't': '11:27:10'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2666000.0, 'sa': 1029500.0, 'hl': False, 'pcp': 0.0, 't': '11:27:09'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2666000.0, 'sa': 1029400.0, 'hl': False, 'pcp': 0.0, 't': '11:27:09'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2666000.0, 'sa': 1029300.0, 'hl': False, 'pcp': -100.0, 't': '11:27:03'}, {'p': 134800.0, 'v': 900, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2666000.0, 'sa': 1029200.0, 'hl': False, 'pcp': 100.0, 't': '11:27:01'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2665100.0, 'sa': 1029200.0, 'hl': False, 'pcp': 0.0, 't': '11:27:01'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2665100.0, 'sa': 1029100.0, 'hl': False, 'pcp': 0.0, 't': '11:26:57'}, {'p': 134700.0, 'v': 200, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2665100.0, 'sa': 1029000.0, 'hl': False, 'pcp': 0.0, 't': '11:26:51'}, {'p': 134700.0, 'v': 200, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2665100.0, 'sa': 1028800.0, 'hl': False, 'pcp': -100.0, 't': '11:26:49'}, {'p': 134800.0, 'v': 300, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2665100.0, 'sa': 1028600.0, 'hl': False, 'pcp': 100.0, 't': '11:26:48'}, {'p': 134700.0, 'v': 500, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2664800.0, 'sa': 1028600.0, 'hl': False, 'pcp': 0.0, 't': '11:26:47'}, {'p': 134700.0, 'v': 2200, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2664800.0, 'sa': 1028100.0, 'hl': True, 'pcp': 0.0, 't': '11:26:47'}, {'p': 134700.0, 'v': 500, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2664800.0, 'sa': 1025900.0, 'hl': False, 'pcp': 0.0, 't': '11:26:47'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2664800.0, 'sa': 1025400.0, 'hl': False, 'pcp': -100.0, 't': '11:26:43'}, {'p': 134800.0, 'v': 100, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2664800.0, 'sa': 1025300.0, 'hl': False, 'pcp': 0.0, 't': '11:26:41'}, {'p': 134800.0, 'v': 100, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2664700.0, 'sa': 1025300.0, 'hl': False, 'pcp': 0.0, 't': '11:26:40'}, {'p': 134800.0, 'v': 1000, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2664600.0, 'sa': 1025300.0, 'hl': False, 'pcp': 0.0, 't': '11:26:30'}, {'p': 134800.0, 'v': 100, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2663600.0, 'sa': 1025300.0, 'hl': False, 'pcp': 0.0, 't': '11:26:29'}, {'p': 134800.0, 'v': 500, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2663500.0, 'sa': 1025300.0, 'hl': False, 'pcp': 0.0, 't': '11:26:29'}, {'p': 134800.0, 'v': 200, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2663000.0, 'sa': 1025300.0, 'hl': False, 'pcp': 0.0, 't': '11:26:29'}, {'p': 134800.0, 'v': 100, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2662800.0, 'sa': 1025300.0, 'hl': False, 'pcp': 100.0, 't': '11:26:29'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2662700.0, 'sa': 1025300.0, 'hl': False, 'pcp': 0.0, 't': '11:26:28'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2662700.0, 'sa': 1025200.0, 'hl': False, 'pcp': 0.0, 't': '11:26:15'}, {'p': 134700.0, 'v': 100, 'cp': 1800.0, 'rcp': 0.0, 'a': 'SD', 'ba': 2662700.0, 'sa': 1025100.0, 'hl': False, 'pcp': -100.0, 't': '11:26:15'}, {'p': 134800.0, 'v': 300, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2662700.0, 'sa': 1025000.0, 'hl': False, 'pcp': 0.0, 't': '11:26:14'}, {'p': 134800.0, 'v': 700, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2662400.0, 'sa': 1025000.0, 'hl': False, 'pcp': 0.0, 't': '11:26:14'}, {'p': 134800.0, 'v': 200, 'cp': 1900.0, 'rcp': 0.0, 'a': 'BU', 'ba': 2661700.0, 'sa': 1025000.0, 'hl': False, 'pcp': 0.0, 't': '11:26:03'}], 'd': '18/09'}
+2024-09-18T04:44:39.3239166Z TRACE:: Debug: Initialization complete.
+2024-09-18T04:44:39.3243405Z TRACE:: Debug: Market order placed for FPT at 134800.0
+2024-09-18T04:44:39.3247501Z TRACE:: Debug: Buy signal for FPT: Price above EMA 134759.35091992214
+2024-09-18T04:44:39.3250489Z TRACE:: Debug: Algorithm starting warm up...
+2024-09-18T04:44:39.3253954Z TRACE:: Debug: No signal changes detected at 2024-07-19 00:00:00
+2024-09-18T04:44:39.3261260Z ERROR:: This operation is not allowed in Initialize or during warm up: OrderRequest.Submit. Please move this code to the OnWarmupFinished() method.
+2024-09-18T04:44:39.3264834Z ERROR:: FPT: The security does not have an accurate price as it has not yet received a bar of data. Before placing a trade (or using SetHoldings) warm up your algorithm with SetWarmup, or use slice.Contains(symbol) to confirm the Slice object has price before using the data. Data does not necessarily all arrive at the same time so your algorithm should confirm the data is ready before using it. In live trading this can mean you do not have an active subscription to the asset class you're trying to trade. If using custom data make sure you've set the 'Value' property.
+2024-09-18T04:44:39.3269044Z TRACE:: Debug: Algorithm Id:(1235881528) completed in 0.34 seconds at 0k data points per second. Processing total of 1 data points.
+2024-09-18T04:44:39.3273752Z TRACE:: Debug: Your log was successfully created and can be retrieved from: /Results/1235881528-log.txt
+2024-09-18T04:44:39.3277775Z TRACE:: BacktestingResultHandler.Run(): Ending Thread...
+2024-09-18T04:44:39.4265660Z TRACE:: 
+STATISTICS:: OrderListHash d41d8cd98f00b204e9800998ecf8427e
+2024-09-18T04:44:39.4269876Z TRACE:: BacktestingResultHandler.SendAnalysisResult(): Processed final packet
+2024-09-18T04:44:39.4278092Z TRACE:: Engine.Run(): Disconnecting from brokerage...
+2024-09-18T04:44:39.4283239Z TRACE:: Engine.Run(): Disposing of setup handler...
+2024-09-18T04:44:39.4287128Z TRACE:: Engine.Main(): Analysis Completed and Results Posted.
+2024-09-18T04:44:39.4294687Z TRACE:: StopSafely(): Waiting for '' thread to stop...
+2024-09-18T04:44:39.4328646Z TRACE:: DataMonitor.GenerateReport():
+DATA USAGE:: Total data requests 88
+DATA USAGE:: Succeeded data requests 0
+DATA USAGE:: Failed data requests 88
+DATA USAGE:: Failed data requests percentage 100%
+DATA USAGE:: Total universe data requests 0
+DATA USAGE:: Succeeded universe data requests 0
+DATA USAGE:: Failed universe data requests 0
+DATA USAGE:: Failed universe data requests percentage 0%
+2024-09-18T04:44:39.4444480Z TRACE:: Engine.Main(): Packet removed from queue: 1235881528
+2024-09-18T04:44:39.4448414Z TRACE:: LeanEngineSystemHandlers.Dispose(): start...
+2024-09-18T04:44:39.4461050Z TRACE:: LeanEngineSystemHandlers.Dispose(): Disposed of system handlers.
+2024-09-18T04:44:39.4465139Z TRACE:: LeanEngineAlgorithmHandlers.Dispose(): start...
+2024-09-18T04:44:39.4483603Z TRACE:: LeanEngineAlgorithmHandlers.Dispose(): Disposed of algorithm handlers.

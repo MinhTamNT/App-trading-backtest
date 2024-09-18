@@ -1,0 +1,9 @@
+{
+    "algorithm-language": "Python",
+    "algorithm-type-name": "Apptrading",
+    "parameters": {},
+    "description": "",
+    "local-id": 762000636,
+    "backtest-folder": "backtests",
+    "port": 8080
+}
