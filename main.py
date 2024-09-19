@@ -10,7 +10,6 @@ from QuantConnect.Data import Slice
 from QuantConnect.Indicators import IndicatorDataPoint
 from QuantConnect.Orders.Fees import ConstantFeeModel
 
-
 class Apptrading(QCAlgorithm):
     ApiKey = "2a23659e-635d-4b93-851a-19ceadb8305f"
     ExchangeApiKey = "32c53e4496-e90a921d28-sjvu3i"
@@ -22,7 +21,7 @@ class Apptrading(QCAlgorithm):
         self.set_warmup(timedelta(days=1))
         self.set_security_initializer(lambda security: security.SetFeeModel(ConstantFeeModel(0.1)))
 
-        self.symbols = ["FPT"]
+        self.symbols = ["ACB"]
         self.ema20_by_symbol = {}
         self.position_by_symbol = {}
         self.historical_data = {}
@@ -35,16 +34,12 @@ class Apptrading(QCAlgorithm):
             self.ema20_by_symbol[symbol] = self.ema(symbol, 20, Resolution.DAILY)
             self.GetStockHistoricalData(symbol)  # Fetch historical data for 1 year
 
-        self.period = timedelta(31)
+        self.period = timedelta(days=31)
         self.nextEntryTime = self.Time
         self.entryPrice = 0
 
         self.Debug("Initialization complete.")
         self.CheckSignals()
-
-    def onData(self, data: Slice):
-        self.Debug(f"Data of the on data {data}")
-        pass
 
     def OnWarmupFinished(self):
         self.Debug(f"Finished warming up")
@@ -52,63 +47,43 @@ class Apptrading(QCAlgorithm):
 
     def CheckSignals(self):
         for symbol in self.ema20_by_symbol.keys():
-            if symbol in self.historical_data:
-                ema = self.ema20_by_symbol[symbol]
-                historical_data = self.historical_data[symbol]
+            if symbol not in self.historical_data:
+                self.Debug(f"No historical data found for {symbol}.")
+                continue
 
-                if historical_data:
-                    # Ensure historical_data is sorted by time
-                    historical_data = sorted(historical_data, key=lambda x: x.Time)
+            ema = self.ema20_by_symbol[symbol]
+            historical_data = sorted(self.historical_data[symbol], key=lambda x: x.Time)
 
-                    previous_difference = None  # Variable to store previous candle's difference
+            if not historical_data:
+                self.Debug(f"No historical data available for {symbol}.")
+                continue
 
-                    for i in range(len(historical_data) - 1):
-                        current_bar = historical_data[i]
-                        next_bar = historical_data[i + 1]
+            previous_difference = None
 
-                        ema.Update(current_bar)  # Update EMA with current candle
+            for i in range(len(historical_data) - 1):
+                current_bar = historical_data[i]
+                next_bar = historical_data[i + 1]
 
-                        close = current_bar.Value
-                        next_close = next_bar.Value
+                ema.Update(current_bar)
 
-                        # Calculate difference between close price and EMA
-                        difference = close - ema.Current.Value
+                close = current_bar.Value
+                next_close = next_bar.Value
 
-                        date_str = current_bar.Time.strftime("%Y-%m-%d %H:%M:%S")
+                difference = close - ema.Current.Value
+                date_str = current_bar.Time.strftime("%Y-%m-%d %H:%M:%S")
 
-                        # Display the difference
-                        self.Debug(
-                            f"{symbol} - {date_str} - Close: {close}, EMA: {ema.Current.Value}, Difference: {difference}")
+                self.Debug(
+                    f"{symbol} - {date_str} - Close: {close}, EMA: {ema.Current.Value}, Difference: {difference}")
 
-                        # Check buy/sell signal based on the previous difference
-                        if previous_difference is not None:
-                            if previous_difference < 0 and difference > 0:
-                                if symbol not in self.position_by_symbol or not self.position_by_symbol[symbol]:
-                                    if not self.Portfolio.Invested and self.nextEntryTime <= self.Time:
-                                        price = next_close
-                                        if price > 0:
-                                            quantity = int(self.Portfolio.Cash / price)
-                                            self.MarketOrder(symbol, quantity)
-                                            self.entryPrice = price
-                                            self.nextEntryTime = self.Time + self.period
-                                            self.Debug(f"Market order placed for {symbol} at {price}")
+                if previous_difference is not None:
+                    if previous_difference < 0 and difference > 0:
+                        self.HandleBuySignal(symbol, close)
+                    elif previous_difference > 0 and difference < 0:
+                        self.HandleSellSignal(symbol)
 
-                                        self.Debug(f"Buy signal for {symbol}: Price above EMA {ema.Current.Value}")
-                                        self.position_by_symbol[symbol] = True  # Update position status
+                # Update previous difference
+                previous_difference = difference
 
-                            elif previous_difference > 0 and difference < 0:
-                                # Sell signal
-                                if symbol in self.position_by_symbol and self.position_by_symbol[symbol]:
-                                    self.Debug(f"Sell signal for {symbol}: Price below EMA {ema.Current.Value}")
-                                    self.position_by_symbol[symbol] = False  # Update position status
-
-                        # Update previous difference
-                        previous_difference = difference
-                else:
-                    self.Debug(f"No historical data found for {symbol}.")
-
-                # Plot historical data
-                self.PlotHistoricalData(symbol)
 
     def GetStockHistoricalData(self, symbol):
         try:
@@ -117,15 +92,16 @@ class Apptrading(QCAlgorithm):
 
             if response and response.status_code == 200:
                 data = response.json()
+
                 historical_bars = []
                 if "data" in data:
                     for data_point in data["data"]:
                         time_str = data_point.get("tradingDate", "")
                         price = data_point.get("close", 0)
+                        self.Debug(f"price: {price}")
                         try:
-                            # Adjusted format to handle ISO 8601 date format
                             date = datetime.strptime(time_str, "%Y-%m-%dT%H:%M:%S.%fZ")
-                            historical_bars.append(IndicatorDataPoint(date, float(price)))
+                            historical_bars.append(IndicatorDataPoint(date, price))
                         except Exception as ex:
                             self.Debug(f"Error processing data point with time {time_str}: {str(ex)}")
 
@@ -135,20 +111,19 @@ class Apptrading(QCAlgorithm):
                     for bar in sorted(historical_bars, key=lambda x: x.Time):
                         ema.Update(bar)
             else:
-                self.Debug(
-                    f"Failed to fetch data for {symbol}. Status: {response.status_code if response else 'No response'}")
+                self.Debug(f"Failed to fetch data for {symbol}. Status: {response.status_code if response else 'No response'}")
         except Exception as ex:
             self.Debug(f"Error fetching historical data for {symbol}: {str(ex)}")
 
     def CreateApiUrl(self, symbol):
         end_date = datetime.now().strftime("%Y-%m-%d")
-        start_date = (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")  # Start date adjusted to 1 year ago
+        start_date = (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")
 
         start_timestamp = int(time.mktime(datetime.strptime(start_date, "%Y-%m-%d").timetuple()))
         end_timestamp = int(time.mktime(datetime.strptime(end_date, "%Y-%m-%d").timetuple()))
 
-        url = (
-            f"https://apipubaws.tcbs.com.vn/stock-insight/v1/stock/bars-long-term?ticker={symbol}&type=stock&resolution=D&from={start_timestamp}&to={end_timestamp}")
+        url = (f"https://apipubaws.tcbs.com.vn/stock-insight/v1/stock/bars-long-term?"
+               f"ticker={symbol}&type=stock&resolution=D&from={start_timestamp}&to={end_timestamp}")
         return url
 
     def MakeRequestWithRetries(self, url, retries=3, delay=5):
@@ -165,36 +140,17 @@ class Apptrading(QCAlgorithm):
             time.sleep(delay)
         return None
 
-    def PlotHistoricalData(self, symbol):
-        if symbol in self.historical_data:
-            historical_data = self.historical_data[symbol]
-            if historical_data:
-                dates = [data.Time for data in historical_data]
-                prices = [data.Value for data in historical_data]
 
-                # Plot the historical data
-                plt.figure(figsize=(10, 6))
-                plt.plot(dates, prices, label='Price', color='blue')
-                plt.xlabel('Date')
-                plt.ylabel('Price')
-                plt.title(f'Historical Data for {symbol}')
-                plt.legend()
-                plt.grid(True)
-                plt.xticks(rotation=45)
-                plt.tight_layout()
+    def HandleBuySignal(self, symbol, price):
+        quantity = int(self.Portfolio.Cash / price)
+        if quantity > 0:
+            self.MarketOrder(symbol, quantity)
+            self.entryPrice = price
+            self.nextEntryTime = self.Time + self.period
+            self.Debug(f"Market order placed for {symbol} at {price}")
+            self.position_by_symbol[symbol] = True
+            self.Debug(f"Buy signal for {symbol}: Price above EMA {self.ema20_by_symbol[symbol].Current.Value}")
 
-                # Save the plot to a file
-                plt.savefig(f"{symbol}_historical_data.png")
-                plt.close()
-
-                # Save data to Excel
-                df = pd.DataFrame({
-                    'Date': dates,
-                    'Price': prices
-                })
-                df.to_excel(f"{symbol}_historical_data.xlsx", index=False)
-                self.Debug(f"Saved historical data for {symbol} to Excel.")
-            else:
-                self.Debug(f"No historical data available for {symbol}.")
-        else:
-            self.Debug(f"No historical data found for {symbol}.")
+    def HandleSellSignal(self, symbol):
+        self.Debug(f"Sell signal for {symbol}: Price {self.entryPrice} below EMA {self.ema20_by_symbol[symbol].Current.Value}")
+        self.position_by_symbol[symbol] = False
