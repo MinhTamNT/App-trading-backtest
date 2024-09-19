@@ -83,7 +83,6 @@ class Apptrading(QCAlgorithm):
                         # Check buy/sell signal based on the previous difference
                         if previous_difference is not None:
                             if previous_difference < 0 and difference > 0:
-                                # Buy signal
                                 if symbol not in self.position_by_symbol or not self.position_by_symbol[symbol]:
                                     if not self.Portfolio.Invested and self.nextEntryTime <= self.Time:
                                         price = next_close
