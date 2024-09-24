@@ -1,0 +1,192 @@
+2024-09-24T03:40:52.1007126Z TRACE:: Engine.Main(): LEAN ALGORITHMIC TRADING ENGINE v2.5.0.0 Mode: DEBUG (64bit) Host: DESKTOP-CKADOQQ
+2024-09-24T03:40:52.1285409Z TRACE:: Engine.Main(): Started 3:40 AM
+2024-09-24T03:40:52.1933394Z TRACE:: Config.Get(): Configuration key not found. Key: lean-manager-type - Using default value: LocalLeanManager
+2024-09-24T03:40:52.2234104Z TRACE:: JobQueue.NextJob(): Selected /LeanCLI/main.py
+2024-09-24T03:40:52.3214879Z TRACE:: Config.GetValue(): scheduled-event-leaky-bucket-capacity - Using default value: 120
+2024-09-24T03:40:52.3219196Z TRACE:: Config.GetValue(): scheduled-event-leaky-bucket-time-interval-minutes - Using default value: 1440
+2024-09-24T03:40:52.3223536Z TRACE:: Config.GetValue(): scheduled-event-leaky-bucket-refill-amount - Using default value: 18
+2024-09-24T03:40:52.3238263Z TRACE:: Config.GetValue(): storage-limit - Using default value: 10737418240
+2024-09-24T03:40:52.3241845Z TRACE:: Config.GetValue(): storage-permissions - Using default value: 3
+2024-09-24T03:40:52.3247415Z TRACE:: Config.Get(): Configuration key not found. Key: optimization-id - Using default value: 
+2024-09-24T03:40:52.3251640Z TRACE:: Config.Get(): Configuration key not found. Key: backtest-name - Using default value: local
+2024-09-24T03:40:52.3334172Z TRACE:: Config.Get(): Configuration key not found. Key: data-channel - Using default value: 
+2024-09-24T03:40:52.3338465Z TRACE:: Config.Get(): Configuration key not found. Key: python-venv - Using default value: 
+2024-09-24T03:40:52.3341437Z TRACE:: Config.Get(): Configuration key not found. Key: out-of-sample-max-end-date - Using default value: 
+2024-09-24T03:40:52.3344893Z TRACE:: Config.GetValue(): out-of-sample-days - Using default value: 0
+2024-09-24T03:40:52.3365881Z TRACE:: Config.Get(): Configuration key not found. Key: data-permission-manager - Using default value: DataPermissionManager
+2024-09-24T03:40:52.3761744Z TRACE:: Config.GetValue(): zip-data-cache-provider - Using default value: 10
+2024-09-24T03:40:52.3811465Z TRACE:: Config.Get(): Configuration key not found. Key: fundamental-data-provider - Using default value: CoarseFundamentalDataProvider
+2024-09-24T03:40:52.3891471Z TRACE:: AlgorithmManager.CreateTokenBucket(): Initializing LeakyBucket: Capacity: 120 RefillAmount: 18 TimeInterval: 1440
+2024-09-24T03:40:52.3901172Z TRACE:: Config.GetValue(): algorithm-manager-time-loop-maximum - Using default value: 20
+2024-09-24T03:40:52.4168575Z TRACE:: Engine.Run(): Resource limits '0' CPUs. 2147483647 MB RAM.
+2024-09-24T03:40:52.4190021Z TRACE:: TextSubscriptionDataSourceReader.SetCacheSize(): Setting cache size to 71582788 items
+2024-09-24T03:40:52.5063146Z TRACE:: Config.GetValue(): downloader-data-update-period - Using default value: 7
+2024-09-24T03:40:53.1530281Z TRACE:: Config.GetValue(): algorithm-creation-timeout - Using default value: 90
+2024-09-24T03:40:53.1577923Z TRACE:: PythonInitializer.Initialize(): start...
+2024-09-24T03:40:54.5007127Z TRACE:: PythonInitializer.Initialize(): ended
+2024-09-24T03:40:54.5031466Z TRACE:: AlgorithmPythonWrapper(): Python version 3.11.7 (main, Dec 15 2023, 18:24:52) [GCC 11.2.0]: Importing python module main
+2024-09-24T03:40:55.6725442Z TRACE:: AlgorithmPythonWrapper(): main successfully imported.
+2024-09-24T03:40:55.6745401Z TRACE:: AlgorithmPythonWrapper(): Creating IAlgorithm instance.
+2024-09-24T03:40:55.6960893Z TRACE:: Config.Get(): Configuration key not found. Key: databases-refresh-period - Using default value: 1.00:00:00
+2024-09-24T03:40:55.9234675Z TRACE:: Config.GetValue(): mute-python-library-logging - Using default value: True
+2024-09-24T03:40:55.9270674Z TRACE:: LocalObjectStore.Initialize(): Storage Root: /Storage. StorageFileCount 9999999. StorageLimit 10240MB
+2024-09-24T03:40:55.9394678Z TRACE:: Config.GetValue(): zip-data-cache-provider - Using default value: 10
+2024-09-24T03:40:55.9510217Z TRACE:: HistoryProviderManager.Initialize(): history providers [SubscriptionDataReaderHistoryProvider]
+2024-09-24T03:40:55.9545384Z TRACE:: BacktestingSetupHandler.Setup(): Setting up job: UID: 310940, PID: 0, Version: 2.5.0.0, Source: WebIDE
+2024-09-24T03:40:55.9652469Z TRACE:: Config.Get(): Configuration key not found. Key: security-data-feeds - Using default value: 
+2024-09-24T03:40:56.6106693Z TRACE:: BaseSetupHandler.SetupCurrencyConversions():
+Account Type: Margin
+
+Symbol      Quantity    Conversion = Value in USD
+USD: $  1000000000.00 @       1.00 = $1000000000
+-------------------------------------------------
+CashBook Total Value:                $1000000000
+
+2024-09-24T03:40:56.6141350Z TRACE:: Total margin information: TotalMarginUsed: 0.00, MarginRemaining: 1000000000.00
+2024-09-24T03:40:56.6148886Z TRACE:: SetUp Backtesting: User: 310940 ProjectId: 0 AlgoId: 1321216160
+2024-09-24T03:40:56.6164308Z TRACE:: Dates: Start: 09/25/2023 End: 09/22/2024 Cash: ¤1,000,000,000.00 MaximumRuntime: 100.00:00:00 MaxOrders: 2147483647
+2024-09-24T03:40:56.6210769Z TRACE:: BacktestingResultHandler(): Sample Period Set: 131.04
+2024-09-24T03:40:56.6224446Z TRACE:: Config.GetValue(): forward-console-messages - Using default value: True
+2024-09-24T03:40:56.6236650Z TRACE:: JOB HANDLERS:
+         DataFeed:             QuantConnect.Lean.Engine.DataFeeds.FileSystemDataFeed
+         Setup:                QuantConnect.Lean.Engine.Setup.BacktestingSetupHandler
+         RealTime:             QuantConnect.Lean.Engine.RealTime.BacktestingRealTimeHandler
+         Results:              QuantConnect.Lean.Engine.Results.BacktestingResultHandler
+         Transactions:         QuantConnect.Lean.Engine.TransactionHandlers.BacktestingTransactionHandler
+         Object Store:         QuantConnect.Lean.Engine.Storage.LocalObjectStore
+         History Provider:     QuantConnect.Lean.Engine.HistoricalData.HistoryProviderManager
+         Brokerage:            QuantConnect.Brokerages.Backtesting.BacktestingBrokerage
+         Data Provider:        QuantConnect.Lean.Engine.DataFeeds.DefaultDataProvider
+
+2024-09-24T03:40:56.6609260Z TRACE:: Event Name "Daily Sampling", scheduled to run.
+2024-09-24T03:40:56.6626360Z TRACE:: AlgorithmManager.Run(): Begin DataStream - Start: 9/25/2023 12:00:00 AM Stop: 9/22/2024 11:59:59 PM Time: 9/24/2023 12:00:00 AM Warmup: True
+2024-09-24T03:40:56.6776670Z TRACE:: Debug: Launching analysis for 1321216160 with LEAN Engine v2.5.0.0
+2024-09-24T03:40:56.7286877Z TRACE:: Config.GetValue(): data-feed-workers-count - Using default value: 8
+2024-09-24T03:40:56.7322101Z TRACE:: Config.GetValue(): data-feed-max-work-weight - Using default value: 400
+2024-09-24T03:40:56.7325544Z TRACE:: WeightedWorkScheduler(): will use 8 workers and MaxWorkWeight is 400
+2024-09-24T03:40:56.9111036Z TRACE:: UniverseSelection.AddPendingInternalDataFeeds(): Adding internal benchmark data feed GAS,#0,GAS,Hour,TradeBar,Trade,Adjusted,OpenInterest,Internal
+2024-09-24T03:40:57.1550552Z TRACE:: Synchronizer.GetEnumerator(): Exited thread.
+2024-09-24T03:40:57.1558624Z TRACE:: AlgorithmManager.Run(): Firing On End Of Algorithm...
+2024-09-24T03:40:57.1804594Z TRACE:: Debug: url: https://apipubaws.tcbs.com.vn/stock-insight/v1/stock/bars-long-term?ticker=GAS&type=stock&resolution=D&from=1695168000&to=1726790400
+2024-09-24T03:40:57.1811285Z TRACE:: Debug: GAS:           date    price   volume
+0   2023-09-21  80759.0   774672
+1   2023-09-22  82719.0   731774
+2   2023-09-25  81445.0   509213
+3   2023-09-26  80808.0   442585
+4   2023-09-27  80899.0   570995
+..         ...      ...      ...
+245 2024-09-16  72600.0  1867152
+246 2024-09-17  72700.0   767172
+247 2024-09-18  73100.0   780115
+248 2024-09-19  73400.0   982241
+249 2024-09-20  73100.0   999886
+
+[250 rows x 3 columns]
+2024-09-24T03:40:57.1815273Z TRACE:: Debug: Initialization complete.
+2024-09-24T03:40:57.1818612Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1822242Z TRACE:: Debug: Volume 13889
+2024-09-24T03:40:57.1826535Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1829354Z TRACE:: Debug: Volume 14305
+2024-09-24T03:40:57.1832923Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1835720Z TRACE:: Debug: Volume 14305
+2024-09-24T03:40:57.1839587Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1843798Z TRACE:: Debug: Volume 14324
+2024-09-24T03:40:57.1849808Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1852449Z TRACE:: Debug: Volume 14324
+2024-09-24T03:40:57.1856578Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1860785Z TRACE:: Debug: Volume 14139
+2024-09-24T03:40:57.1869188Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1876167Z TRACE:: Debug: Volume 13889
+2024-09-24T03:40:57.1880444Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1884041Z TRACE:: Debug: Volume 14380
+2024-09-24T03:40:57.1887581Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1890982Z TRACE:: Debug: Volume 14437
+2024-09-24T03:40:57.1897075Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1899947Z TRACE:: Debug: Volume 14031
+2024-09-24T03:40:57.1903845Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1906676Z TRACE:: Debug: Volume 14013
+2024-09-24T03:40:57.1913097Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1916405Z TRACE:: Debug: Volume 13732
+2024-09-24T03:40:57.1919439Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1923057Z TRACE:: Debug: Volume 13819
+2024-09-24T03:40:57.1928061Z TRACE:: Debug: Volume 0.0
+2024-09-24T03:40:57.1930853Z TRACE:: Debug: Accurate daily end-times now enabled by default. See more at https://qnt.co/3YHaWHL. To disable it and use legacy daily bars set self.settings.daily_precise_end_time = False.
+2024-09-24T03:40:57.1933645Z TRACE:: Debug: Algorithm starting warm up...
+2024-09-24T03:40:57.1967986Z ERROR:: This operation is not allowed in Initialize or during warm up: OrderRequest.Submit. Please move this code to the OnWarmupFinished() method.
+2024-09-24T03:40:57.1969029Z TRACE:: Engine.Run(): Exiting Algorithm Manager
+2024-09-24T03:40:57.1972899Z TRACE:: Debug: index 1
+2024-09-24T03:40:57.1982799Z TRACE:: Debug: index 3
+2024-09-24T03:40:57.1985993Z TRACE:: Debug: index 5
+2024-09-24T03:40:57.1990177Z TRACE:: Debug: index 7
+2024-09-24T03:40:57.1993789Z TRACE:: Debug: index 9
+2024-09-24T03:40:57.1999138Z TRACE:: Debug: index 11
+2024-09-24T03:40:57.2002849Z TRACE:: Debug: index 13
+2024-09-24T03:40:57.2006628Z TRACE:: Debug: index 15
+2024-09-24T03:40:57.2010896Z TRACE:: Debug: index 17
+2024-09-24T03:40:57.2015408Z TRACE:: Debug: index 19
+2024-09-24T03:40:57.2023433Z TRACE:: Debug: index 21
+2024-09-24T03:40:57.2028661Z TRACE:: Debug: index 23
+2024-09-24T03:40:57.2035332Z TRACE:: Debug: index 25
+2024-09-24T03:40:57.2042476Z TRACE:: Debug: 
+Symbol       Date Action   Price  Volume       Total Value           Fee           Tax    Total Cost               NAV          profit
+   GAS 2023-12-04      B 71890.0 13800.0   992,082,000 VND 1,488,123 VND         0 VND 1,488,123 VND   990,593,877 VND           0 VND
+   GAS 2023-12-07      S 70889.0 13800.0   978,268,200 VND 1,467,402 VND   978,268 VND 2,445,670 VND   975,822,530 VND -14,771,347 VND
+   GAS 2024-01-04      B 69797.0 14300.0   998,097,100 VND 1,497,146 VND         0 VND 1,497,146 VND   996,599,954 VND           0 VND
+   GAS 2024-01-09      S 69069.0 14300.0   987,686,700 VND 1,481,530 VND   987,687 VND 2,469,217 VND   985,217,483 VND -11,382,470 VND
+   GAS 2024-01-19      B 69797.0 14300.0   998,097,100 VND 1,497,146 VND         0 VND 1,497,146 VND   996,599,954 VND           0 VND
+   GAS 2024-01-24      S 68978.0 14300.0   986,385,400 VND 1,479,578 VND   986,385 VND 2,465,964 VND   983,919,436 VND -12,680,517 VND
+   GAS 2024-01-29      B 69706.0 14300.0   996,795,800 VND 1,495,194 VND         0 VND 1,495,194 VND   995,300,606 VND           0 VND
+   GAS 2024-01-31      S 68614.0 14300.0   981,180,200 VND 1,471,770 VND   981,180 VND 2,452,950 VND   978,727,250 VND -16,573,356 VND
+   GAS 2024-02-16      B 69706.0 14300.0   996,795,800 VND 1,495,194 VND         0 VND 1,495,194 VND   995,300,606 VND           0 VND
+   GAS 2024-02-23      S 69524.0 14300.0   994,193,200 VND 1,491,290 VND   994,193 VND 2,485,483 VND   991,707,717 VND  -3,592,889 VND
+   GAS 2024-02-27      B 70616.0 14100.0   995,685,600 VND 1,493,528 VND         0 VND 1,493,528 VND   994,192,071 VND           0 VND
+   GAS 2024-03-11      S 70798.0 14100.0   998,251,800 VND 1,497,378 VND   998,252 VND 2,495,630 VND   995,756,170 VND   1,564,099 VND
+   GAS 2024-03-13      B 71890.0 13800.0   992,082,000 VND 1,488,123 VND         0 VND 1,488,123 VND   990,593,877 VND           0 VND
+   GAS 2024-04-08      S 72618.0 13800.0 1,002,128,400 VND 1,503,193 VND 1,002,128 VND 2,505,321 VND   999,623,079 VND   9,029,202 VND
+   GAS 2024-05-07      B 69433.0 14300.0   992,891,900 VND 1,489,338 VND         0 VND 1,489,338 VND   991,402,562 VND           0 VND
+   GAS 2024-05-09      S 69251.0 14300.0   990,289,300 VND 1,485,434 VND   990,289 VND 2,475,723 VND   987,813,577 VND  -3,588,985 VND
+   GAS 2024-05-20      B 69160.0 14400.0   995,904,000 VND 1,493,856 VND         0 VND 1,493,856 VND   994,410,144 VND           0 VND
+   GAS 2024-06-14      S 71890.0 14400.0 1,035,216,000 VND 1,552,824 VND 1,035,216 VND 2,588,040 VND 1,032,627,960 VND  38,217,816 VND
+   GAS 2024-07-02      B 71162.0 14000.0   996,268,000 VND 1,494,402 VND         0 VND 1,494,402 VND   994,773,598 VND           0 VND
+   GAS 2024-07-11      S 71162.0 14000.0   996,268,000 VND 1,494,402 VND   996,268 VND 2,490,670 VND   993,777,330 VND    -996,268 VND
+   GAS 2024-07-15      B 71253.0 14000.0   997,542,000 VND 1,496,313 VND         0 VND 1,496,313 VND   996,045,687 VND           0 VND
+   GAS 2024-07-17      S 70980.0 14000.0   993,720,000 VND 1,490,580 VND   993,720 VND 2,484,300 VND   991,235,700 VND  -4,809,987 VND
+   GAS 2024-07-31      B 72709.0 13700.0   996,113,300 VND 1,494,170 VND         0 VND 1,494,170 VND   994,619,130 VND           0 VND
+   GAS 2024-08-05      S 69615.0 13700.0   953,725,500 VND 1,430,588 VND   953,726 VND 2,384,314 VND   951,341,186 VND -43,277,943 VND
+   GAS 2024-08-07      B 72254.0 13800.0   997,105,200 VND 1,495,658 VND         0 VND 1,495,658 VND   995,609,542 VND           0 VND
+   GAS 2024-09-13      S 74300.0 13800.0 1,025,340,000 VND 1,538,010 VND 1,025,340 VND 2,563,350 VND 1,022,776,650 VND  27,167,108 VND
+2024-09-24T03:40:57.2048832Z TRACE:: Debug: Total Profit: -35,695,537 VND
+2024-09-24T03:40:57.2056050Z TRACE:: Debug: Total Profit Percentage: -0.14%
+2024-09-24T03:40:57.2056789Z TRACE:: StopSafely(): Waiting for 'Isolator Thread' thread to stop...
+2024-09-24T03:40:57.2060522Z TRACE:: Debug: Total Fee: 38,802,169 VND
+2024-09-24T03:40:57.2070088Z TRACE:: Debug: Total Tax: 12,922,653 VND
+2024-09-24T03:40:57.2070750Z TRACE:: FileSystemDataFeed.Exit(): Start. Setting cancellation token...
+2024-09-24T03:40:57.2073649Z TRACE:: Debug: Total Cost: 51,724,821 VND
+2024-09-24T03:40:57.2079920Z TRACE:: Debug: Algorithm Id:(1321216160) completed in 0.57 seconds at 0k data points per second. Processing total of 1 data points.
+2024-09-24T03:40:57.2100059Z TRACE:: FileSystemDataFeed.Exit(): Exit Finished.
+2024-09-24T03:40:57.2109767Z TRACE:: BacktestingResultHandler.Exit(): starting...
+2024-09-24T03:40:57.2115338Z TRACE:: BacktestingResultHandler.Exit(): Saving logs...
+2024-09-24T03:40:57.2195349Z TRACE:: Debug: Your log was successfully created and can be retrieved from: /Results/1321216160-log.txt
+2024-09-24T03:40:57.2195864Z TRACE:: StopSafely(): Waiting for 'Result Thread' thread to stop...
+2024-09-24T03:40:57.2198768Z TRACE:: BacktestingResultHandler.Run(): Ending Thread...
+2024-09-24T03:40:57.3433071Z TRACE:: 
+STATISTICS:: OrderListHash d41d8cd98f00b204e9800998ecf8427e
+2024-09-24T03:40:57.3438164Z TRACE:: BacktestingResultHandler.SendAnalysisResult(): Processed final packet
+2024-09-24T03:40:57.3445757Z TRACE:: Engine.Run(): Disconnecting from brokerage...
+2024-09-24T03:40:57.3449790Z TRACE:: Engine.Run(): Disposing of setup handler...
+2024-09-24T03:40:57.3453319Z TRACE:: Engine.Main(): Analysis Completed and Results Posted.
+2024-09-24T03:40:57.3461269Z TRACE:: StopSafely(): Waiting for '' thread to stop...
+2024-09-24T03:40:57.3498043Z TRACE:: DataMonitor.GenerateReport():
+DATA USAGE:: Total data requests 4
+DATA USAGE:: Succeeded data requests 0
+DATA USAGE:: Failed data requests 4
+DATA USAGE:: Failed data requests percentage 100%
+DATA USAGE:: Total universe data requests 0
+DATA USAGE:: Succeeded universe data requests 0
+DATA USAGE:: Failed universe data requests 0
+DATA USAGE:: Failed universe data requests percentage 0%
+2024-09-24T03:40:57.3613480Z TRACE:: Engine.Main(): Packet removed from queue: 1321216160
+2024-09-24T03:40:57.3618019Z TRACE:: LeanEngineSystemHandlers.Dispose(): start...
+2024-09-24T03:40:57.3631421Z TRACE:: LeanEngineSystemHandlers.Dispose(): Disposed of system handlers.
+2024-09-24T03:40:57.3636820Z TRACE:: LeanEngineAlgorithmHandlers.Dispose(): start...
+2024-09-24T03:40:57.3647771Z TRACE:: LeanEngineAlgorithmHandlers.Dispose(): Disposed of algorithm handlers.

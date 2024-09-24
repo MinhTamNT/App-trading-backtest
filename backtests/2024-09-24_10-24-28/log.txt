@@ -1,0 +1,85 @@
+2024-09-24T03:24:29.9503407Z TRACE:: Engine.Main(): LEAN ALGORITHMIC TRADING ENGINE v2.5.0.0 Mode: DEBUG (64bit) Host: DESKTOP-CKADOQQ
+2024-09-24T03:24:30.0158930Z TRACE:: Engine.Main(): Started 3:24 AM
+2024-09-24T03:24:30.0354536Z TRACE:: Config.Get(): Configuration key not found. Key: lean-manager-type - Using default value: LocalLeanManager
+2024-09-24T03:24:30.0793119Z TRACE:: JobQueue.NextJob(): Selected /LeanCLI/main.py
+2024-09-24T03:24:30.1963367Z TRACE:: Config.GetValue(): scheduled-event-leaky-bucket-capacity - Using default value: 120
+2024-09-24T03:24:30.1969009Z TRACE:: Config.GetValue(): scheduled-event-leaky-bucket-time-interval-minutes - Using default value: 1440
+2024-09-24T03:24:30.1978220Z TRACE:: Config.GetValue(): scheduled-event-leaky-bucket-refill-amount - Using default value: 18
+2024-09-24T03:24:30.2000531Z TRACE:: Config.GetValue(): storage-limit - Using default value: 10737418240
+2024-09-24T03:24:30.2005894Z TRACE:: Config.GetValue(): storage-permissions - Using default value: 3
+2024-09-24T03:24:30.2011516Z TRACE:: Config.Get(): Configuration key not found. Key: optimization-id - Using default value: 
+2024-09-24T03:24:30.2018609Z TRACE:: Config.Get(): Configuration key not found. Key: backtest-name - Using default value: local
+2024-09-24T03:24:30.2134036Z TRACE:: Config.Get(): Configuration key not found. Key: data-channel - Using default value: 
+2024-09-24T03:24:30.2136791Z TRACE:: Config.Get(): Configuration key not found. Key: python-venv - Using default value: 
+2024-09-24T03:24:30.2139841Z TRACE:: Config.Get(): Configuration key not found. Key: out-of-sample-max-end-date - Using default value: 
+2024-09-24T03:24:30.2142363Z TRACE:: Config.GetValue(): out-of-sample-days - Using default value: 0
+2024-09-24T03:24:30.2155736Z TRACE:: Config.Get(): Configuration key not found. Key: data-permission-manager - Using default value: DataPermissionManager
+2024-09-24T03:24:30.2464931Z TRACE:: Config.GetValue(): zip-data-cache-provider - Using default value: 10
+2024-09-24T03:24:30.2494715Z TRACE:: Config.Get(): Configuration key not found. Key: fundamental-data-provider - Using default value: CoarseFundamentalDataProvider
+2024-09-24T03:24:30.2555497Z TRACE:: AlgorithmManager.CreateTokenBucket(): Initializing LeakyBucket: Capacity: 120 RefillAmount: 18 TimeInterval: 1440
+2024-09-24T03:24:30.2565498Z TRACE:: Config.GetValue(): algorithm-manager-time-loop-maximum - Using default value: 20
+2024-09-24T03:24:30.2784925Z TRACE:: Engine.Run(): Resource limits '0' CPUs. 2147483647 MB RAM.
+2024-09-24T03:24:30.2802384Z TRACE:: TextSubscriptionDataSourceReader.SetCacheSize(): Setting cache size to 71582788 items
+2024-09-24T03:24:30.3598128Z TRACE:: Config.GetValue(): downloader-data-update-period - Using default value: 7
+2024-09-24T03:24:30.9060001Z TRACE:: Config.GetValue(): algorithm-creation-timeout - Using default value: 90
+2024-09-24T03:24:30.9106836Z TRACE:: PythonInitializer.Initialize(): start...
+2024-09-24T03:24:32.2219506Z TRACE:: PythonInitializer.Initialize(): ended
+2024-09-24T03:24:32.2245491Z TRACE:: AlgorithmPythonWrapper(): Python version 3.11.7 (main, Dec 15 2023, 18:24:52) [GCC 11.2.0]: Importing python module main
+2024-09-24T03:24:32.8619271Z TRACE:: AlgorithmPythonWrapper(): main successfully imported.
+2024-09-24T03:24:32.8642678Z TRACE:: AlgorithmPythonWrapper(): Creating IAlgorithm instance.
+2024-09-24T03:24:32.8878449Z TRACE:: Config.Get(): Configuration key not found. Key: databases-refresh-period - Using default value: 1.00:00:00
+2024-09-24T03:24:33.1171897Z TRACE:: Config.GetValue(): mute-python-library-logging - Using default value: True
+2024-09-24T03:24:33.1195914Z TRACE:: LocalObjectStore.Initialize(): Storage Root: /Storage. StorageFileCount 9999999. StorageLimit 10240MB
+2024-09-24T03:24:33.1304716Z TRACE:: Config.GetValue(): zip-data-cache-provider - Using default value: 10
+2024-09-24T03:24:33.1434656Z TRACE:: HistoryProviderManager.Initialize(): history providers [SubscriptionDataReaderHistoryProvider]
+2024-09-24T03:24:33.1464180Z TRACE:: BacktestingSetupHandler.Setup(): Setting up job: UID: 310940, PID: 0, Version: 2.5.0.0, Source: WebIDE
+2024-09-24T03:24:33.1539076Z TRACE:: Config.Get(): Configuration key not found. Key: security-data-feeds - Using default value: 
+2024-09-24T03:24:33.2159330Z TRACE:: BacktestingResultHandler(): Sample Period Set: 131.04
+2024-09-24T03:24:33.2194107Z TRACE:: Config.GetValue(): forward-console-messages - Using default value: True
+2024-09-24T03:24:33.6850267Z ERROR:: Engine.Run(): During the algorithm initialization, the following exception has occurred: TradingUtils.__init__() takes 3 positional arguments but 4 were given
+  at initialize
+    self.trading_utils = TradingUtils(self ,self.FEE_PERCENT , self.TAX_PERCENT)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ in main.py: line 36
+ TradingUtils.__init__() takes 3 positional arguments but 4 were given
+2024-09-24T03:24:33.6865669Z TRACE:: JOB HANDLERS:
+         DataFeed:             QuantConnect.Lean.Engine.DataFeeds.FileSystemDataFeed
+         Setup:                QuantConnect.Lean.Engine.Setup.BacktestingSetupHandler
+         RealTime:             QuantConnect.Lean.Engine.RealTime.BacktestingRealTimeHandler
+         Results:              QuantConnect.Lean.Engine.Results.BacktestingResultHandler
+         Transactions:         QuantConnect.Lean.Engine.TransactionHandlers.BacktestingTransactionHandler
+         Object Store:         QuantConnect.Lean.Engine.Storage.LocalObjectStore
+         History Provider:     QuantConnect.Lean.Engine.HistoricalData.HistoryProviderManager
+         Brokerage:            QuantConnect.Brokerages.Backtesting.BacktestingBrokerage
+         Data Provider:        QuantConnect.Lean.Engine.DataFeeds.DefaultDataProvider
+
+2024-09-24T03:24:33.6877350Z TRACE:: FileSystemDataFeed.Exit(): Start. Setting cancellation token...
+2024-09-24T03:24:33.6896483Z TRACE:: FileSystemDataFeed.Exit(): Exit Finished.
+2024-09-24T03:24:33.6904791Z TRACE:: BacktestingResultHandler.Exit(): starting...
+2024-09-24T03:24:33.7092880Z ERROR:: During the algorithm initialization, the following exception has occurred: TradingUtils.__init__() takes 3 positional arguments but 4 were given
+  at initialize
+    self.trading_utils = TradingUtils(self ,self.FEE_PERCENT , self.TAX_PERCENT)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ in main.py: line 36
+ TradingUtils.__init__() takes 3 positional arguments but 4 were given
+ TradingUtils.__init__() takes 3 positional arguments but 4 were given
+  at initialize
+    self.trading_utils = TradingUtils(self ,self.FEE_PERCENT , self.TAX_PERCENT)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ in main.py: line 36
+ TradingUtils.__init__() takes 3 positional arguments but 4 were given
+2024-09-24T03:24:33.7142650Z TRACE:: BacktestingResultHandler.Exit(): Saving logs...
+2024-09-24T03:24:33.7203849Z TRACE:: Debug: Your log was successfully created and can be retrieved from: /Results/1487717624-log.txt
+2024-09-24T03:24:33.7205227Z TRACE:: StopSafely(): Waiting for 'Result Thread' thread to stop...
+2024-09-24T03:24:33.7207133Z TRACE:: BacktestingResultHandler.Run(): Ending Thread...
+2024-09-24T03:24:33.8182824Z TRACE:: 
+STATISTICS:: OrderListHash d41d8cd98f00b204e9800998ecf8427e
+2024-09-24T03:24:33.8186699Z TRACE:: BacktestingResultHandler.SendAnalysisResult(): Processed final packet
+2024-09-24T03:24:33.8194131Z TRACE:: Engine.Run(): Disconnecting from brokerage...
+2024-09-24T03:24:33.8197987Z TRACE:: Engine.Run(): Disposing of setup handler...
+2024-09-24T03:24:33.8202181Z TRACE:: Engine.Main(): Analysis Completed and Results Posted.
+2024-09-24T03:24:33.8216850Z TRACE:: Engine.Main(): Packet removed from queue: 1487717624
+2024-09-24T03:24:33.8221075Z TRACE:: LeanEngineSystemHandlers.Dispose(): start...
+2024-09-24T03:24:33.8235217Z TRACE:: LeanEngineSystemHandlers.Dispose(): Disposed of system handlers.
+2024-09-24T03:24:33.8240210Z TRACE:: LeanEngineAlgorithmHandlers.Dispose(): start...
+2024-09-24T03:24:33.8250494Z TRACE:: LeanEngineAlgorithmHandlers.Dispose(): Disposed of algorithm handlers.

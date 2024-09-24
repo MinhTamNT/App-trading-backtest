@@ -1,0 +1,4 @@
+/equity/usa/daily/gas.zip
+/equity/usa/daily/gas.zip
+/equity/usa/hour/gas.zip
+/equity/usa/hour/gas.zip
