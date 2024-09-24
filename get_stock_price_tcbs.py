@@ -2,7 +2,7 @@ import requests
 import time
 from datetime import datetime
 import pandas as pd
-from QuantConnect.Indicators import IndicatorDataPoint
+
 
 class StockDataService:
     def __init__(self, algorithm):

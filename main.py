@@ -158,7 +158,7 @@ class EMAlgorithm(QCAlgorithm):
                     cash_balance = new_cash_balance
 
             # Convert profit to int
-            df['profit'] = df['profit'].astype(int)
+            df['profit'] = df['profit']
 
             # Debugging output for validation
             self.Debug("\nTransaction DataFrame before summary:")
