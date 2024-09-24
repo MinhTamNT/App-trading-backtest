@@ -86,13 +86,13 @@ class EMAlgorithm(QCAlgorithm):
             'Symbol': symbol,
             'Date': date.strftime('%Y-%m-%d') if date else self.Time.strftime('%Y-%m-%d'),
             'Action': action,
-            'Volume': 0,
+            'Volume': None,
             'Price': price,
-            'Purchasing Power': 0,
+            'Purchasing Power': None,
             'Fee': fee,
             'Tax': tax,
-            'Total Value': 0,
-            'Total Cost': 0,
+            'Total Value': None,
+            'Total Cost': None,
             'Cash Balance': self.Portfolio.Cash,
             'NAV': self.Portfolio.Cash,
             'Profit': 0,
@@ -190,18 +190,18 @@ class EMAlgorithm(QCAlgorithm):
 
             # Format and display final DataFrame
             final_df = final_df.applymap(
-                lambda x: f"{x:,.3f}" if isinstance(x, (int, float)) else '-' if pd.isna(x) else x)
+                lambda x: f"{x:,.0f}" if isinstance(x, (int, float)) else '-' if pd.isna(x) else x)
 
             # Additional Debugging Output
             self.Debug("\nSummary and Transaction Log:")
             self.Debug(tabulate(final_df, headers='keys', tablefmt='psql'))
 
             # Display totals
-            self.Debug(f"\nTotal Profit: {total_profit:,.3f} VND")
-            self.Debug(f"Total Profit Percentage: {total_profit_percentage:.2f}%")
-            self.Debug(f"Total Fee: {total_fee:,.3f} VND")
-            self.Debug(f"Total Tax: {total_tax:,.3f} VND")
-            self.Debug(f"Total Cost: {total_cost:,.3f} VND")
+            self.Debug(f"\nTotal Profit: {total_profit:,.0f} VND")
+            self.Debug(f"Total Profit Percentage: {total_profit_percentage:.0f}%")
+            self.Debug(f"Total Fee: {total_fee:,.0f} VND")
+            self.Debug(f"Total Tax: {total_tax:,.0f} VND")
+            self.Debug(f"Total Cost: {total_cost:,.0f} VND")
         else:
             self.Debug("No transactions were made.")
 
