@@ -10,11 +10,12 @@ import sys
 import os
 from dotenv import load_dotenv
 import pandas as pd
-
+from tabulate import tabulate
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from get_stock_price_tcbs import StockDataService
-
+from trading_utils import TradingUtils
 class EMAlgorithm(QCAlgorithm):
+
     def initialize(self):
         load_dotenv()
         self.ApiKey = "2a23659e-635d-4b93-851a-19ceadb8305f"
@@ -26,12 +27,13 @@ class EMAlgorithm(QCAlgorithm):
         self.set_cash(1000000000)
 
         self.FEE_PERCENT = 0.15 / 100
-        self.TAX_PERCENT = 0.1 / 100
+        self.TAX_PERCENT = 0.15 / 100
 
         self.symbols = ["GAS"]
         self.ema_symbol = {}
         self.historical_data = {}
         self.stock_data_service = StockDataService(self)
+        self.trading_utils = TradingUtils(self.FEE_PERCENT ,self.FEE_PERCENT)
 
         # Thêm chứng khoán và cài đặt EMA
         for symbol in self.symbols:
@@ -75,137 +77,146 @@ class EMAlgorithm(QCAlgorithm):
                 previous_difference = difference
 
     def HandleBuySignal(self, symbol, price, date):
-        purchasing_power = self.Portfolio.Cash - self.Portfolio.Cash * 0.0015
-        volume = int(purchasing_power / price)
-        self.MarketOrder(symbol, volume)  # Buy shares
-        self.log_transaction(symbol, "B", price, volume, fee=self.FEE_PERCENT, tax=None, date=date)
+        self.log_transaction(symbol, "B", price, fee=self.FEE_PERCENT, tax=None, date=date)
 
     def HandleSellSignal(self, symbol, price, date):
-        volume = self.Portfolio[symbol].Quantity
-        self.MarketOrder(symbol, -volume)
-        self.log_transaction(symbol, "S", price, volume, fee=self.FEE_PERCENT, tax=self.TAX_PERCENT, date=date)
+        self.log_transaction(symbol, "S", price,  fee=self.FEE_PERCENT, tax=self.TAX_PERCENT, date=date)
 
-    def log_transaction(self, symbol, action, price, volume, fee=None, tax=None, date=None):
-        total_value = volume * price
-        total_cost = (fee if fee is not None else 0) + (tax if tax is not None else 0)
-        self.Debug(f"Volume {volume}")
-        # Đảm bảo giao dịch hợp lệ
-        if total_value < 0 or volume < 0 or price < 0:
-            self.Debug(f"Invalid transaction for {symbol}: volume={volume}, price={price}, fee={fee}, tax={tax}, total_value={total_value}")
-            return
-
+    def log_transaction(self, symbol, action, price, fee=None, tax=None, date=None,
+                        cash_balance=None):
         transaction = {
             'Symbol': symbol,
+            'Date': date.strftime('%Y-%m-%d') if date else self.Time.strftime('%Y-%m-%d'),
             'Action': action,
-            'Volume': volume,
+            'Volume': 0,
             'Price': price,
+            'Purchasing Power': 0,
             'Fee': fee,
             'Tax': tax,
-            'Total Value': total_value,
-            'Total Cost': total_cost,
-            'Date': date.strftime('%Y-%m-%d') if date else self.Time.strftime('%Y-%m-%d')
+            'Total Value': 0,
+            'Total Cost': 0,
+            'Cash Balance': self.Portfolio.Cash,
+            'NAV': self.Portfolio.Cash,
+            'Profit': 0,
         }
-
         self.transactions_log.append(transaction)
 
     def OnEndOfAlgorithm(self):
-
-
         if self.transactions_log:
             df = pd.DataFrame(self.transactions_log)
 
-            # Ensure that the first action is not 'S'
             if not df.empty and df.iloc[0]['Action'] == 'S':
                 df = df.iloc[1:]
 
-            df['Volume'] = (df['Volume'] // 100) * 100
-
-            # Calculate total value
-            df['Total Value'] = df['Volume'] * df['Price']
-
-            # Calculate fees and taxes
-            df['Fee'] = self.FEE_PERCENT * df['Total Value']
-
-            df['Tax'] = df.apply(lambda row: 0 if row['Action'] == 'B' else self.TAX_PERCENT * row['Total Value'],
-                                 axis=1)
-
-            df['Total Cost'] = df['Fee'] + df['Tax']
-
-            # Calculate net value (NAV)
-            df['Total Value'] = df['Total Value'].astype(int)
-            df['NAV'] = (df['Total Value'] - df['Total Cost']).astype(int)
-
+            cash_balance = self.Portfolio.Cash
             df['profit'] = 0
-            last_buy_net_value = None
-            last_buy_volume = None
+            df['Cash Balance'] = 0
+            df['NAV'] = 0
+            initial_cash_balance = cash_balance
 
-            # Initialize cash balance with the initial cash
-            # df['Cash Balance'] = init_cash
-
-            # Loop to assign volumes and calculate profit for matched buy-sell pairs
             for index, row in df.iterrows():
-                if row['Action'] == 'B':
-                    last_buy_net_value = df.at[index, 'NAV']
-                    last_buy_volume = df.at[index, 'Volume']  # Store the buy volume
+                if row['Action'] == 'B':  # Buy action
+                    df.at[index, 'Purchasing Power'] = cash_balance - cash_balance * 0.0015
+                    df.at[index, 'Volume'] = (df.at[index, 'Purchasing Power'] // df.at[index, 'Price']).astype(int)
+                    df.at[index, "Volume"] = (df.at[index, "Volume"] // 100) * 100
 
-                    self.Debug(f"index {index}")
-                    # if index == 1:
-                    #
-                    #     df.at[index, 'Cash Balance'] = init_cash - df.at[index, 'Total Value'] - df.at[
-                    #         index, 'Total Cost']
-                    # else:
-                    #     if index - 1 in df.index:  # Check if previous index exists
-                    #         df.at[index, 'Cash Balance'] = df.at[index - 1, 'Cash Balance'] - df.at[
-                    #             index, 'Total Value'] - df.at[index, 'Total Cost']
+                    total_value = df.at[index, 'Volume'] * df.at[index, 'Price']
+                    df.at[index, 'Total Value'] = total_value
+                    fee, tax, total_cost = self.trading_utils.calculate_fees_and_taxes('B', total_value)
+                    df.at[index, 'Fee'] = fee
+                    df.at[index, 'Tax'] = tax
+                    df.at[index, 'Total Cost'] = total_cost
+
+                    new_cash_balance, nav = self.trading_utils.update_cash_balance_and_nav(cash_balance, total_value, total_cost,
+                                                                             is_buy=True)
+                    df.at[index, 'Cash Balance'] = new_cash_balance
+                    df.at[index, 'NAV'] = nav
+                    if index == 1:
+                        df.at[index, 'profit'] = nav - initial_cash_balance
+                    else:
+                        df.at[index, 'profit'] = nav - df.at[index - 1, 'NAV']
+
+                    cash_balance = new_cash_balance
 
                 elif row['Action'] == 'S':
-                    if last_buy_net_value is not None and last_buy_volume is not None:
-                        # Match sell volume with the previous buy volume
-                        df.at[index, 'Volume'] = last_buy_volume
+                    df.at[index, 'Volume'] = df.at[index - 1, 'Volume']
+                    total_value = df.at[index, 'Volume'] * df.at[index, 'Price']
+                    df.at[index, 'Total Value'] = total_value
+                    fee, tax, total_cost = self.trading_utils.calculate_fees_and_taxes('S', total_value)
+                    df.at[index, 'Fee'] = fee
+                    df.at[index, 'Tax'] = tax
+                    df.at[index, 'Total Cost'] = total_cost
 
-                        # Recalculate values based on the updated volume
-                        df.at[index, 'Total Value'] = df.at[index, 'Volume'] * row['Price']
-                        df.at[index, 'Fee'] = self.FEE_PERCENT * df.at[index, 'Total Value']
-                        df.at[index, 'Tax'] = self.TAX_PERCENT * df.at[index, 'Total Value']
-                        df.at[index, 'Total Cost'] = df.at[index, 'Fee'] + df.at[index, 'Tax']
-                        df.at[index, 'NAV'] = df.at[index, 'Total Value'] - df.at[index, 'Total Cost']
+                    new_cash_balance, _ = self.trading_utils.update_cash_balance_and_nav(cash_balance, total_value, total_cost,
+                                                                           is_buy=False)
+                    df.at[index, 'Cash Balance'] = new_cash_balance
 
-                        # Calculate profit as the difference between sell NAV and buy NAV
-                        df.at[index, 'profit'] = df.at[index, 'NAV'] - last_buy_net_value
+                    df.at[index, 'NAV'] = new_cash_balance
 
-                        # Update cash balance after a sell
-                        # if index - 1 in df.index:  # Check if previous index exists
-                        #     df.at[index, 'Cash Balance'] = df.at[index - 1, 'Cash Balance'] + df.at[
-                        #         index, 'Total Value'] - df.at[index, 'Total Cost']
+                    df.at[index, 'profit'] = df.at[index, 'NAV'] - df.at[index - 1, 'NAV']
 
-                        # After the sell, reset the buy value and volume for next transactions
-                        last_buy_net_value = None
-                        last_buy_volume = None
+                    df.at[index, 'Purchasing Power'] = df.at[index - 1, 'Purchasing Power']
 
+                    cash_balance = new_cash_balance
+
+            # Convert profit to int
             df['profit'] = df['profit'].astype(int)
 
-            # Summary calculations
+            # Debugging output for validation
+            self.Debug("\nTransaction DataFrame before summary:")
+            self.Debug(tabulate(df, headers='keys', tablefmt='psql'))
+
+            # Calculate totals for summary
             total_profit = df['profit'].sum()
             total_cash = df['NAV'].sum()
-            total_profit_percentage = (total_profit / total_cash) * 100 if total_cash != 0 else 0
+            total_profit_percentage = (total_profit / total_cash * 100) if total_cash != 0 else 0
             total_fee = df['Fee'].sum()
             total_tax = df['Tax'].sum()
             total_cost = total_fee + total_tax
 
-            # Rearrange columns
-            df = df[['Symbol', 'Date', 'Action', 'Price', 'Volume', 'Total Value', 'Fee', 'Tax', 'Total Cost',
-                      'NAV', 'profit']]
+            # Create a summary DataFrame
+            summary_df = pd.DataFrame({
+                'Cash Balance': [cash_balance],
+                'NAV': [initial_cash_balance]
+            })
 
-            # Output results
-            self.Debug(
-                f"\n{df.to_string(index=False, formatters={'Total Value': '{:,.0f} VND'.format, 'Fee': '{:,.0f} VND'.format, 'Tax': '{:,.0f} VND'.format, 'Total Cost': '{:,.0f} VND'.format, 'Cash Balance': '{:,.0f} VND'.format, 'NAV': '{:,.0f} VND'.format, 'profit': '{:,.0f} VND'.format})}")
-            self.Debug(f"Total Profit: {total_profit:,.0f} VND")
+            # Rearrange and format the final DataFrame
+            df = df[['Symbol', 'Date', 'Action', 'Price', 'Purchasing Power', 'Volume', 'Total Value', 'Fee', 'Tax',
+                     'Total Cost', 'NAV', 'profit', 'Cash Balance']]
+            final_df = pd.concat([summary_df, df], ignore_index=True)
+
+            final_df.columns = [
+                'Cash Balance', 'NAV', 'Symbol', 'Date', 'Action', 'Price', 'Purchasing Power', 'Volume', 'Total Value',
+                'Fee', 'Tax', 'Total Cost', 'Profit'
+            ]
+
+            # Format and display final DataFrame
+            final_df = final_df.applymap(
+                lambda x: f"{x:,.0f}" if isinstance(x, (int, float)) else '-' if pd.isna(x) else x)
+
+            self.Debug("\nSummary and Transaction Log:")
+            self.Debug(tabulate(final_df, headers='keys', tablefmt='psql'))
+
+            # Display totals
+            self.Debug(f"\nTotal Profit: {total_profit:,.0f} VND")
             self.Debug(f"Total Profit Percentage: {total_profit_percentage:.2f}%")
             self.Debug(f"Total Fee: {total_fee:,.0f} VND")
             self.Debug(f"Total Tax: {total_tax:,.0f} VND")
             self.Debug(f"Total Cost: {total_cost:,.0f} VND")
         else:
             self.Debug("No transactions were made.")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
