@@ -6,16 +6,17 @@ from QuantConnect.Brokerages import BrokerageName
 from QuantConnect.Orders.Fees import ConstantFeeModel
 import sys
 import os
-from dotenv import load_dotenv
 import pandas as pd
 from tabulate import tabulate
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from get_stock_price_tcbs import StockDataService
 from trading_utils import TradingUtils
+import pandas as pd
+import os
 class EMAlgorithm(QCAlgorithm):
 
     def initialize(self):
-        load_dotenv()
+
         self.ApiKey = "2a23659e-635d-4b93-851a-19ceadb8305f"
         self.set_start_date(datetime.now() - timedelta(days=365))
         self.set_end_date(datetime.now())
@@ -27,11 +28,13 @@ class EMAlgorithm(QCAlgorithm):
         self.FEE_PERCENT = 0.15 / 100
         self.TAX_PERCENT = 0.15 / 100
 
-        self.symbols = ["GAS"]
+        self.period = 20
+
+        self.symbols = ["FPT"]
         self.ema_symbol = {}
         self.historical_data = {}
         self.stock_data_service = StockDataService(self)
-        self.trading_utils = TradingUtils(self.FEE_PERCENT ,self.FEE_PERCENT)
+        self.trading_utils = TradingUtils(self.FEE_PERCENT ,self.TAX_PERCENT)
 
         # Thêm chứng khoán và cài đặt EMA
         for symbol in self.symbols:
@@ -39,7 +42,7 @@ class EMAlgorithm(QCAlgorithm):
             equity.SetDataNormalizationMode(DataNormalizationMode.RAW)
             self.set_benchmark(symbol)
             self.set_brokerage_model(BrokerageName.INTERACTIVE_BROKERS_BROKERAGE)
-            self.ema_symbol[symbol] = self.ema(symbol, 20, Resolution.DAILY)
+            self.ema_symbol[symbol] = self.ema(symbol,  self.period, Resolution.DAILY)
             self.historical_data[symbol] = self.stock_data_service.get_stock_price_tcbs(symbol, "20-09-2023", "20-09-2024")
 
         self.Debug("Initialization complete.")
@@ -113,7 +116,7 @@ class EMAlgorithm(QCAlgorithm):
             initial_cash_balance = cash_balance
 
             for index, row in df.iterrows():
-                if row['Action'] == 'B':  # Buy action
+                if row['Action'] == 'B':
                     df.at[index, 'Purchasing Power'] = cash_balance - cash_balance * 0.0015
                     df.at[index, 'Volume'] = (df.at[index, 'Purchasing Power'] // df.at[index, 'Price']).astype(int)
                     df.at[index, "Volume"] = (df.at[index, "Volume"] // 100) * 100
@@ -125,8 +128,9 @@ class EMAlgorithm(QCAlgorithm):
                     df.at[index, 'Tax'] = tax
                     df.at[index, 'Total Cost'] = total_cost
 
-                    new_cash_balance, nav = self.trading_utils.update_cash_balance_and_nav(cash_balance, total_value, total_cost,
-                                                                             is_buy=True)
+                    new_cash_balance, nav = self.trading_utils.update_cash_balance_and_nav(cash_balance, total_value,
+                                                                                           total_cost,
+                                                                                           is_buy=True)
                     df.at[index, 'Cash Balance'] = new_cash_balance
                     df.at[index, 'NAV'] = nav
                     if index == 1:
@@ -145,8 +149,9 @@ class EMAlgorithm(QCAlgorithm):
                     df.at[index, 'Tax'] = tax
                     df.at[index, 'Total Cost'] = total_cost
 
-                    new_cash_balance, _ = self.trading_utils.update_cash_balance_and_nav(cash_balance, total_value, total_cost,
-                                                                           is_buy=False)
+                    new_cash_balance, _ = self.trading_utils.update_cash_balance_and_nav(cash_balance, total_value,
+                                                                                         total_cost,
+                                                                                         is_buy=False)
                     df.at[index, 'Cash Balance'] = new_cash_balance
 
                     df.at[index, 'NAV'] = new_cash_balance
@@ -157,12 +162,7 @@ class EMAlgorithm(QCAlgorithm):
 
                     cash_balance = new_cash_balance
 
-            # Convert profit to int
             df['profit'] = df['profit']
-
-            # Debugging output for validation
-            self.Debug("\nTransaction DataFrame before summary:")
-            self.Debug(tabulate(df, headers='keys', tablefmt='psql'))
 
             # Calculate totals for summary
             total_profit = df['profit'].sum()
@@ -172,13 +172,11 @@ class EMAlgorithm(QCAlgorithm):
             total_tax = df['Tax'].sum()
             total_cost = total_fee + total_tax
 
-            # Create a summary DataFrame
             summary_df = pd.DataFrame({
                 'Cash Balance': [cash_balance],
                 'NAV': [initial_cash_balance]
             })
 
-            # Rearrange and format the final DataFrame
             df = df[['Symbol', 'Date', 'Action', 'Price', 'Purchasing Power', 'Volume', 'Total Value', 'Fee', 'Tax',
                      'Total Cost', 'NAV', 'profit', 'Cash Balance']]
             final_df = pd.concat([summary_df, df], ignore_index=True)
@@ -192,9 +190,12 @@ class EMAlgorithm(QCAlgorithm):
             final_df = final_df.applymap(
                 lambda x: f"{x:,.0f}" if isinstance(x, (int, float)) else '-' if pd.isna(x) else x)
 
-            # Additional Debugging Output
-            self.Debug("\nSummary and Transaction Log:")
+            # Debug only final summary
             self.Debug(tabulate(final_df, headers='keys', tablefmt='psql'))
+
+            export_path = "transactions_summary.xlsx"
+            final_df.to_excel(export_path, index=False)
+            self.Debug(f"Exported transactions summary to {export_path}")
 
             # Display totals
             self.Debug(f"\nTotal Profit: {total_profit:,.0f} VND")
@@ -204,6 +205,7 @@ class EMAlgorithm(QCAlgorithm):
             self.Debug(f"Total Cost: {total_cost:,.0f} VND")
         else:
             self.Debug("No transactions were made.")
+
 
 
 

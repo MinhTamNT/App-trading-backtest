@@ -7,7 +7,6 @@ import pandas as pd
 class StockDataService:
     def __init__(self, algorithm):
         self.algorithm = algorithm
-        self.ApiKey = "2a23659e-635d-4b93-851a-19ceadb8305f"
 
     def get_stock_price_tcbs(self, symbol, from_date_str, to_date_str):
         try:
@@ -41,7 +40,6 @@ class StockDataService:
 
             if historical_prices:
                 df = pd.DataFrame(historical_prices)
-                self.algorithm.Debug(f"{symbol}: {df}")
                 return df
             else:
                 self.algorithm.Debug(f"No historical data found for {symbol} in the specified date range.")
@@ -57,14 +55,13 @@ class StockDataService:
 
         url = (f"https://apipubaws.tcbs.com.vn/stock-insight/v1/stock/bars-long-term?"
                f"ticker={symbol}&type=stock&resolution=D&from={start_timestamp}&to={end_timestamp}")
-        self.algorithm.Debug(f"url: {url}")
         return url
 
     def make_request_with_retries(self, url, retries=3, delay=5):
         for attempt in range(retries):
             try:
-                headers = {"X-Fiin-Key": self.ApiKey, "Accept": "application/json"}
-                response = requests.get(url, headers=headers, timeout=10)
+
+                response = requests.get(url, timeout=10)
                 if response.status_code == 200:
                     return response
                 else:
